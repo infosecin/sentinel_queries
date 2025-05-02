@@ -2,7 +2,6 @@
 //various system processes has been whitelisted to remove false positive
 DeviceProcessEvents
 | where FileName == "netsh.exe"
-| where ProcessCommandLine != @"netsh  advfirewall firewall delete rule name=""Forcepoint ECA"""
 | where ProcessCommandLine !startswith @"netsh  advfirewall firewall show rule"
 |where ProcessCommandLine !startswith @"netsh interface ipv6 delete address interface"
 |where ProcessCommandLine !startswith @"netsh interface ipv4 set interface"
