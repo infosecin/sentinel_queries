@@ -6,6 +6,5 @@ DeviceProcessEvents
 |where ProcessCommandLine !startswith @"netsh interface ipv6 delete address interface"
 |where ProcessCommandLine !startswith @"netsh interface ipv4 set interface"
 |where ProcessCommandLine !startswith @"netsh interface ipv6 set address interface"
-|where InitiatingProcessParentFileName != "PanGPS.exe"
 | where ProcessCommandLine matches regex @"(?i)netsh\s+.*(advfirewall|a).*?(firewall|f).*?(show|s|set|se|add|ad|delete|del).*?(rule|r).*"
 | project Timestamp, ReportId,DeviceId,FileName,DeviceName, InitiatingProcessAccountName, ProcessCommandLine, InitiatingProcessParentFileName
