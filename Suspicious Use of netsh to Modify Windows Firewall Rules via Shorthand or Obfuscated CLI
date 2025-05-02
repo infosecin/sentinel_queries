@@ -1,10 +1,13 @@
 //This custom query is created by Ankit Rai on 1st May 2025 to detect any local firewall rule addition/deletion in windows
 //various system processes has been whitelisted to remove false positive
+let excludedPrefixes = dynamic([
+  "netsh advfirewall firewall show rule",
+  "netsh interface ipv6 delete address interface",
+  "netsh interface ipv4 set interface",
+  "netsh interface ipv6 set address interface"
+//keep adding your FPs here]);
 DeviceProcessEvents
 | where FileName == "netsh.exe"
-| where ProcessCommandLine !startswith @"netsh  advfirewall firewall show rule"
-|where ProcessCommandLine !startswith @"netsh interface ipv6 delete address interface"
-|where ProcessCommandLine !startswith @"netsh interface ipv4 set interface"
-|where ProcessCommandLine !startswith @"netsh interface ipv6 set address interface"
+| where not(ProcessCommandLine has_any (excludedPrefixes))
 | where ProcessCommandLine matches regex @"(?i)netsh\s+.*(advfirewall|a).*?(firewall|f).*?(show|s|set|se|add|ad|delete|del).*?(rule|r).*"
 | project Timestamp, ReportId,DeviceId,FileName,DeviceName, InitiatingProcessAccountName, ProcessCommandLine, InitiatingProcessParentFileName
