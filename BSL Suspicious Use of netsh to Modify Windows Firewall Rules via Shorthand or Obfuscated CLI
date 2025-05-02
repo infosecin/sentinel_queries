@@ -1,0 +1,12 @@
+//This custom query is created by Ankit Rai on 1st May 2025 to detect any local firewall rule addition/deletion in windows
+//various system processes has been whitelisted to remove false positive
+DeviceProcessEvents
+| where FileName == "netsh.exe"
+| where ProcessCommandLine != @"netsh  advfirewall firewall delete rule name=""Forcepoint ECA"""
+| where ProcessCommandLine !startswith @"netsh  advfirewall firewall show rule"
+|where ProcessCommandLine !startswith @"netsh interface ipv6 delete address interface"
+|where ProcessCommandLine !startswith @"netsh interface ipv4 set interface"
+|where ProcessCommandLine !startswith @"netsh interface ipv6 set address interface"
+|where InitiatingProcessParentFileName != "PanGPS.exe"
+| where ProcessCommandLine matches regex @"(?i)netsh\s+.*(advfirewall|a).*?(firewall|f).*?(show|s|set|se|add|ad|delete|del).*?(rule|r).*"
+| project Timestamp, ReportId,DeviceId,FileName,DeviceName, InitiatingProcessAccountName, ProcessCommandLine, InitiatingProcessParentFileName
