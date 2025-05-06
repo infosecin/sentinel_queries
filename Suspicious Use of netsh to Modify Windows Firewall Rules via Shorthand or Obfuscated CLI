@@ -1,4 +1,4 @@
-//This custom query is created by Ankit Rai on 1st May 2025 to detect any local firewall rule addition/deletion in windows
+//This custom query is created by Ankit Rai aka #TheAnalogist on 1st May 2025 to detect any local firewall rule addition/deletion in windows
 //various system processes has been whitelisted to remove false positive
 let excludedPrefixes = dynamic([
   "netsh advfirewall firewall show rule",
