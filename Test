@@ -1,1 +1,17 @@
 
+public class HelloWorld {
+
+    // Method to add two numbers
+    public static int addNumbers(int a, int b) {
+        return a + b;
+    }
+
+    public static void main(String[] args) {
+        // Print Hello World
+        System.out.println("Hello, World!");
+
+        // Add two numbers and print the result
+        int result = addNumbers(5, 7);
+        System.out.println("The sum of 5 and 7 is: " + result);
+    }
+}
